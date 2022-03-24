@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html  ng-controller="mainCtrl">
+<head>
+	<title></title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+	<meta content="yes" name="apple-mobile-web-app-capable"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+	<meta name="full-screen" content="yes"/>
+	<meta name="x5-orientation" content="portrait"/>
+	<meta name="360-fullscreen" content="true"/>
+	<meta name="browsermode" content="application"/>
+	<script type="application/javascript">
+        if(location.href.split("&").length !== 1){
+            location.href = location.href.split("&")[0];
+        }
+	</script>
+<link href="index.css?8b4ad3" rel="stylesheet"></head>
+<body ng-click="showHide($event)">
+<div id="wrap">
+	<div class="exitIcon"
+	     ng-class="{'dis_bl':!loading}"
+	     ng-if="isVr"
+	     ng-click="exitVr($event)">
+	</div>
+	<!--京东链接-->
+	<!--<div class="jd_icon f12"
+	     ng-if="!isVr && isShow"
+	     ng-click="jdDownLoad($event)"
+	     ng-class="{'dis_bl':!loading}">
+	</div>-->
+	<!--模式转换-->
+	<div class="changeBox f12"
+	     ng-if="!isVr && isShow"
+	     ng-click="showControl($event)"
+	     ng-class="{'dis_bl':!loading,'planet':showType == 1,'normal':showType == 2,'ball':showType == 3}"
+	     ng-bind="showName">
+	</div>
+	<!--更多操作-->
+	<div class="more_icon f12"
+	     ng-if="!isVr && isShow"
+	     ng-click="showMoreControl($event)"
+	     ng-class="{'active':showMore['status']}">
+	</div>
+	<div class="turnIcon">
+		<p class="font_w" ng-bind="turnIconInfo"></p>
+	</div>
+	<div ng-if="!isVr && isShow">
+		<div class="userInfo" ng-class="{'dis_bl':!loading}">
+			<div class="userIcon">
+				<img ng-src="{{userIcon}}" alt="">
+				<div class="userInfo_box">
+					<p class="font_w f16" ng-bind="userName"></p>
+					<p class="font_w mt_5" ng-bind="createTime"></p>
+				</div>
+				<div ng-click="playMusic($event)"
+				     ng-if="musicSrc !== '' && musicSrc != null"
+				     ng-class="{'start':musicStatus}"
+				     class="music_icon"></div>
+			</div>
+			<p class="font_w mt_20 f16" ng-bind="userDisc"></p>
+		</div>
+		<!--竖屏按钮组-->
+		<div class="btn_box" ng-class="{'dis_bl':!loading}">
+			<div class="gyro_icon"
+			     ng-click="gyroControl($event)"
+			     ng-class="{'open':isGyro,'close':!isGyro}">
+			</div>
+			<div class="vr_icon mt_20"
+			     ng-click="vrControl($event)">
+			</div>
+			<div class="share_icon mt_20"
+			     ng-click="showCode($event)"
+			     ng-class="{'open':isShare,'close':!isShare}">
+			</div>
+			<div class="down_icon mt_20"
+			     ng-click="downLoad($event)">
+				<div class="icon_bg"></div>
+			</div>
+		</div>
+		<!--横屏按钮组-->
+		<div class="btn_box_more"
+		     ng-if="showMore['status']" ng-class="{'dis_bl':showMore['status'],'dis_no':!showMore['status']}">
+			<div class="down_icon mr_20 fl"
+			     ng-click="downLoad($event)">
+				<div class="icon_bg"></div>
+			</div>
+			<div class="share_icon mr_20 fl"
+			     ng-click="showCode($event)"
+			     ng-class="{'open':isShare,'close':!isShare}">
+			</div>
+			<div class="vr_icon mr_20 fl"
+			     ng-click="vrControl($event)">
+			</div>
+			<div class="gyro_icon fl"
+			     ng-click="gyroControl($event)"
+			     ng-class="{'open':isGyro,'close':!isGyro}">
+			</div>
+		</div>
+	</div>
+</div>
+<div class="loading f16"
+     ng-if="loading"
+     style="font-weight: bold;font-size: 0.24rem;">Loading...</div>
+<audio loop="loop"  style="width: 0;height: 0;" src="" id="audio"></audio>
+<div id="canvasBox"  ng-show="isShare">
+	<div class="mark" ng-class="{'vis_vis':isShare}" ng-click="hideCode()"></div>
+	<!--这是我们拿来画图的画布-->
+	<canvas id="downLoadCanvas" width="300" height="346"></canvas>
+</div>
+<!--生成二维码的画布：隐式存在即可-->
+<div id="qrcodeCanvas" style="visibility: hidden;"></div>
+<!-- js文件 -->
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.qrcode.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/three.min.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js?"></script>
+<script type="text/javascript" src="vendor.js"></script><script type="text/javascript" src="index.js?8b4ad383"></script></body>
+</html>
+
